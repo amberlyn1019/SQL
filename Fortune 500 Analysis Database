@@ -55,3 +55,37 @@ VALUES
     ('Company II', 'Telecommunications', 110.5, 2000, 1, 21, 12, 4.9),
     ('Company JJ', 'Manufacturing', 370.0, 3100, 1, 20, 12, 7.6),
     ('Company KK', 'Healthcare', 150.2, 3400, 0, 16, 8, 5.3);
+
+#Use a select statement to find which companies offer maternity leave. 
+SELECT company_name, maternity_leave_weeks
+FROM fortune_companies
+ORDER BY maternity_leave_weeks desc;
+
+#Use a select statement to determine which companies offer at least two weeks of PTO. 
+SELECT company_name, paid_time_off_days
+FROM fortune_companies 
+GROUP BY paid_time_off_days
+HAVING paid_time_off_days > 13;
+
+#Use a select statement to find which companies in finance, technology, healthcare, and retail have an employee tenure of more than three years. 
+SELECT company_name, industry, avg_employee_tenure
+FROM fortune_companies
+WHERE industry = 'Finance'
+or industry = 'Technology'
+or industry = 'Heathcare'
+or industry = 'Retail'
+ORDER BY avg_employee_tenure desc;
+
+#Use a select statement to determine the amount of years an employee staayed with the company as a whole number
+SELECT participant_name, 
+ROUND(completion_fraction*100, 1) AS completion_fraction_percent
+FROM marathon;
+
+#Use a Select statement to determine if the avg_employee_tenure is a Green (>=6), Yellow (>=3), or Red (>=1) Flag
+SELECT COUNT(*),
+CASE WHEN completion_fraction >=.75 THEN "75%+"
+WHEN completion_fraction >=.5 THEN "50%+"
+WHEN completion_fraction >=.25 THEN "25%+"
+ELSE "Under 25%" END AS "quarter_completed"
+FROM marathon
+GROUP BY quarter_completed;
